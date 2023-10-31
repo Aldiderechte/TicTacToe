@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  nginx:
+    container_name: TicTacToe_nginx
+    volumes:
+      - ./..:/var/www/TicTacToe
+      - ./nginx/templates:/etc/nginx/templates
+    ports:
+      - "80:80"
+    networks:
+      - backend_net
+    build:
+      context: ./..
+      target: nginx
+      dockerfile: docker/Dockerfile
+  php:
+    container_name: php
+    volumes:
+      - ./..:/var/www/TicTacToe
+    build:
+      context: ./..
+      dockerfile: docker/Dockerfile
+    networks:
+      - backend_net
+
+networks:
+  backend_net:
